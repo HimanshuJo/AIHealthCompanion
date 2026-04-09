@@ -1,0 +1,75 @@
+#!/bin/bash
+
+PROJECT_NAME=$1
+
+if [ -z "$PROJECT_NAME" ]; then
+  echo "Usage: ./setup-frontend.sh project-name"
+  exit 1
+fi
+
+echo "Creating Vite React project..."
+npm create vite@latest $PROJECT_NAME -- --template react
+
+cd $PROJECT_NAME || exit
+
+echo "Installing dependencies..."
+npm install
+npm install axios react-router-dom
+npm install -D tailwindcss postcss autoprefixer
+
+echo "Initializing Tailwind..."
+npx tailwindcss init -p
+
+echo "Creating folder structure..."
+
+mkdir -p src/assets
+mkdir -p src/components/ui
+mkdir -p src/components/health
+mkdir -p src/pages
+mkdir -p src/services
+mkdir -p src/types
+
+echo "Creating base files..."
+
+touch src/components/ui/Button.jsx
+touch src/components/ui/Card.jsx
+touch src/components/ui/Input.jsx
+
+touch src/components/health/SymptomForm.jsx
+
+touch src/pages/Landing.jsx
+touch src/pages/Dashboard.jsx
+
+touch src/services/api.js
+
+echo "Configuring Tailwind..."
+
+cat > tailwind.config.js <<EOL
+export default {
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {
+      colors: {
+        primary: "#2563eb",
+        secondary: "#16a34a",
+      },
+    },
+  },
+  plugins: [],
+}
+EOL
+
+cat > src/index.css <<EOL
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+EOL
+
+echo "Frontend setup complete ✅"
+
+// ------- ####### -------
+
+nano setup-frontend.sh
+
+chmod +x setup-frontend.sh
+./setup-frontend.sh ai-health-frontend
