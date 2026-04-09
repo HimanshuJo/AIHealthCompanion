@@ -62,8 +62,12 @@ export default function SymptomForm() {
       {/* ✅ Result */}
       {result && (
         <Card className="mt-4">
-          <h3 className="font-bold">Possible Cause:</h3>
-          <p>{result.cause}</p>
+          <h3 className="font-bold">Possible Causes:</h3>
+          <ul>
+            {result.causes.map((c, i) => (
+              <li key={i}>• {c}</li>
+            ))}
+          </ul>
 
           <h3 className="font-bold mt-2">Advice:</h3>
           <p>{result.advice}</p>

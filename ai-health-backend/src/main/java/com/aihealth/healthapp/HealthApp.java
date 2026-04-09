@@ -4,7 +4,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.aihealth")
 @EnableScheduling
 public class HealthApp{
 

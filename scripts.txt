@@ -1,75 +1,83 @@
-#!/bin/bash
+Front-end:
 
-PROJECT_NAME=$1
+  nano setup-frontend.sh
 
-if [ -z "$PROJECT_NAME" ]; then
-  echo "Usage: ./setup-frontend.sh project-name"
-  exit 1
-fi
+  chmod +x setup-frontend.sh
+  ./setup-frontend.sh ai-health-frontend
 
-echo "Creating Vite React project..."
-npm create vite@latest $PROJECT_NAME -- --template react
+  versions:
 
-cd $PROJECT_NAME || exit
+    Node: node -v (Currently v20.19.3)
 
-echo "Installing dependencies..."
-npm install
-npm install axios react-router-dom
-npm install -D tailwindcss postcss autoprefixer
+    NPM: npm -v (Currently 11.4.2)
 
-echo "Initializing Tailwind..."
-npx tailwindcss init -p
+    Dependencies: npm list --depth=0
 
-echo "Creating folder structure..."
+      Currently:
 
-mkdir -p src/assets
-mkdir -p src/components/ui
-mkdir -p src/components/health
-mkdir -p src/pages
-mkdir -p src/services
-mkdir -p src/types
+        ├── @eslint/js@9.39.4
+        ├── @types/react-dom@19.2.3
+        ├── @types/react@19.2.14
+        ├── @vitejs/plugin-react@6.0.1
+        ├── axios@1.14.0
+        ├── eslint-plugin-react-hooks@7.0.1
+        ├── eslint-plugin-react-refresh@0.5.2
+        ├── eslint@9.39.4
+        ├── globals@17.4.0
+        ├── react-dom@19.2.4
+        ├── react-router-dom@7.14.0
+        ├── react@19.2.4
+        └── vite@8.0.7
 
-echo "Creating base files..."
+    List top level packages: npm list --depth=0 --json
 
-touch src/components/ui/Button.jsx
-touch src/components/ui/Card.jsx
-touch src/components/ui/Input.jsx
+    Specific package versions:
 
-touch src/components/health/SymptomForm.jsx
+      npm list react
 
-touch src/pages/Landing.jsx
-touch src/pages/Dashboard.jsx
+        Currently:
 
-touch src/services/api.js
+          ├─┬ react-dom@19.2.4
+          │ └── react@19.2.4 deduped
+          ├─┬ react-router-dom@7.14.0
+          │ ├─┬ react-router@7.14.0
+          │ │ └── react@19.2.4 deduped
+          │ └── react@19.2.4 deduped
+          └── react@19.2.4
 
-echo "Configuring Tailwind..."
+      npm list axios
 
-cat > tailwind.config.js <<EOL
-export default {
-  content: ["./index.html", "./src/**/*.{js,jsx}"],
-  theme: {
-    extend: {
-      colors: {
-        primary: "#2563eb",
-        secondary: "#16a34a",
-      },
-    },
-  },
-  plugins: [],
-}
-EOL
+        └── axios@1.14.0
 
-cat > src/index.css <<EOL
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-EOL
+      npm list tailwindcss
 
-echo "Frontend setup complete ✅"
+    Show package.json version directly:
 
-// ------- ####### -------
+      cat package.json
 
-nano setup-frontend.sh
+    Check Outdated Packages:
 
-chmod +x setup-frontend.sh
-./setup-frontend.sh ai-health-frontend
+      npm outdated
+
+  Other libraries installation:
+
+    npm install @mui/material @emotion/react @emotion/styled
+    npm install lucide-react
+    npm install framer-motion
+    npm install clsx
+
+  Tailwind:
+
+    npm install -D tailwindcss postcss autoprefixer
+
+    npx tailwindcss -v
+
+    npx tailwindcss init -p
+
+    Nuclear Fix (if environment glitch)
+      
+      rm -rf node_modules package-lock.json
+      npm cache clean --force
+      npm install
+      npm install -D tailwindcss postcss autoprefixer
+      npx tailwindcss init -p
